@@ -1,5 +1,6 @@
 //required for second alternative
 var bl = require('bl');
+var concatstream = require('concat-stream');
 
 var http = require('http');
 
@@ -22,9 +23,16 @@ http.get(url, function(response)
 */
 	//second alternative
 	//install the bl (Buffer List) or concat-stream
-	response.pipe(bl(function(error, data){
+	/*response.pipe(bl(function(error, data){
 		var datastr = data.toString();
 		console.log(datastr.length);
       	console.log(datastr);
-	}))
+	}));*/
+
+	response.pipe(concatstream(function (data) 
+	{
+		var datastr = data.toString();
+		console.log(datastr.length);
+      	console.log(datastr);
+	}));
 });
